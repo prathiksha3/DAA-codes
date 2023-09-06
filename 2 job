@@ -1,5 +1,5 @@
 class Job:
-    def __init__(self,taskId,profit,deadline):
+    def _init_(self,deadline,profit,taskId):
         self.taskId=taskId
         self.deadline=deadline
         self.profit=profit
@@ -9,19 +9,18 @@ def scheduleJobs(jobs,T):
     jobs.sort(key=lambda x:x.profit,reverse=True)
     for job in jobs:
         for j in reversed(range(job.deadline)):
-            if j<T and slot[j]==-1:
-               slot[j]=job.taskId
-               profit+=job.profit
-               break
-    print("the scheduled jobs are",list(filter(lambda x:x!=-1,slot)))
-    print("the total profit earned is",profit)
-if __name__  == "__main__":
+            if j < T and slot[j]==-1:
+                slot[j]=job.taskId
+                profit+=job.profit
+    print("the scheduled jobs are:",list(filter(lambda x:x!=0,slot)))
+    print("the total profit earned is:",profit)
+if _name=="__main_":
     jobs=[]
     n=int(input("enter the number of jobs"))
     for i in range(n):
-        taskId=int(input("enter the taskId for job{i+1}:"))
+        taskId=int(input("enter the task id for job{i+1}:"))
         deadline=int(input("enter the deadline for job{i+1}:"))
         profit=int(input("enter the profit for job{i+1}:"))
-        jobs.append(Job(taskId,deadline,profit))
-    T=int(input("enter the deadline limit:"))
-    scheduleJobs(jobs,T)
+        jobs.append(Job(deadline,profit,taskId))
+    T=int(input("enter the deadline limit"))
+scheduleJobs(jobs,T)
