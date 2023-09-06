@@ -19,9 +19,9 @@ def printNodes(node,Val=''):
 def printDecode(node,Val=''):
     newVal=Val+str(node.huff)
     if (node.left):
-        printNodes(node.left,newVal)
+        printDecode(node.left,newVal)
     if (node.right):
-        printNodes(node.right,newVal)
+        printDecode(node.right,newVal)
     if(not node.left and not node.right):
         print(f"{newVal}-->{node.symbol}")
 n=int(input("enter the number of chars"))
@@ -38,7 +38,7 @@ print(freq)
 nodes=[]
 for x in range(len(chars)):
     heapq.heappush(nodes,node(freq[x],chars[x]))
-while(len(nodes))>1:
+while len(nodes)>1:
     left=heapq.heappop(nodes)
     right=heapq.heappop(nodes)
     left.huff=0
@@ -48,4 +48,4 @@ while(len(nodes))>1:
 print("encode form is:")
 printNodes(nodes[0])
 print("decode form is:")
-printNodes(nodes[0])
+printDecode(nodes[0])
