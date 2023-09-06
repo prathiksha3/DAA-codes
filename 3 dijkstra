@@ -1,0 +1,50 @@
+import heapq
+def dijkstra(graph,start):
+    distances={node:float('inf')for node in graph}
+    distances[start]=0
+    heap=[(0,start)]
+    while heap:
+        current_dist,current_node=heapq.heappop(heap)
+        if current_dist>distances[current_node]:
+            continue
+        for neighbour,weight in graph[current_node].items():
+            distance=current_dist+weight
+            if distance<distances[neighbour]:
+                distances[neighbour]=distance
+                heapq.heappush(heap,(distance,neighbour))
+    return distances
+def find_optimal_route(graph,start,destination):
+    distances=dijkstra(graph,start)
+    if distances[destination]==float('inf'):
+        return None
+    route=[]
+    node=destination
+    while node!=start:
+        route.append(node)
+        neighbours=graph[node]
+        min_distance=float('inf')
+        next_node=None
+        for neighbour,weight in neighbours.items():
+            if distances[neighbour]+weight==distances[node] and  distances[neighbour]<min_distance:
+                min_distance=distances[neighbour]
+                next_node=neighbour
+        if next_node is None or next_node in route:
+            return None
+        node=next_node
+    route.append(start)
+    route.reverse()
+    return route
+graph={
+    'A':{'B':3,'C':99,'D':7,'E':99},
+    'B':{'A':3,'C':4,'D':2,'E':99},
+    'C':{'A':99,'B':4,'D':5,'E':6},
+    'D':{'A':7,'B':2,'C':5,'E':4},
+    'E':{'A':99,'B':99,'C':6,'D':4}
+}
+start_location='A'
+destination_location='E'
+optimal_route=find_optimal_route(graph,start_location,destination_location)
+if optimal_route is None:
+    print("no valid route exist from start to destination")
+else:
+    print("optimal route",'-->'.join(optimal_route))
