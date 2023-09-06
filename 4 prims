@@ -3,7 +3,7 @@ class Graph:
     def __init__(self,vertices):
         self.V=vertices
         self.graph=[[0 for i in range(vertices)]for i in range(vertices)]
-    def add_edge(self,v,u,weight):
+    def add_edge(self,u,v,weight):
         self.graph[u][v]=weight
         self.graph[v][u]=weight
     def print_mst(self,parent):
@@ -22,7 +22,7 @@ class Graph:
             for v in range(self.V):
                 if key[v]<min_key and not mst_set[v]:
                     min_key=key[v]
-                    min_idex=v
+                    min_index=v
             mst_set[min_index]=True
             for v in range(self.V):
                 if self.graph[min_index][v] > 0 and not mst_set[v] and self.graph[min_index][v] < key[v]:
@@ -34,6 +34,6 @@ g=Graph(n)
 print("enter the electrification between each station")
 for i in range(n):
     for j in range(i+1,n):
-        cost=input("enter the distance between the station{i}  and {j}")
+        cost=int(input("enter the distance between the station{i}  and {j}"))
         g.add_edge(i,j,cost)
 g.prim_mst()
